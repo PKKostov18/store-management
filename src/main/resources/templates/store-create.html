@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="bg">
+<head>
+  <meta charset="UTF-8">
+  <title>Създаване на магазин</title>
+  <link rel="stylesheet" th:href="@{/css/store-create.css}">
+</head>
+<body>
+<div class="container">
+  <h2>🛒 Създаване на нов магазин</h2>
+
+  <form th:action="@{/store/add}" method="post" th:object="${store}">
+
+    <label>Име на магазина:</label>
+    <input type="text" th:field="*{name}" required/>
+
+    <label>Брой касови апарати:</label>
+    <input type="number" name="registerCount" min="1" required/>
+
+    <fieldset>
+      <legend>Настройки на магазина</legend>
+
+      <div>
+        <label>Процент надценка за храни:</label>
+        <input type="number" step="0.01" min="0" th:field="*{storeSettings.foodMarkupPercentage}" required/>
+      </div>
+
+      <div>
+        <label>Процент надценка за нехранителни:</label>
+        <input type="number" step="0.01" min="0" th:field="*{storeSettings.nonFoodMarkupPercentage}" required/>
+      </div>
+
+      <div>
+        <label>Дни до изтичане за отстъпка:</label>
+        <input type="number" min="0" th:field="*{storeSettings.daysBeforeExpirationForDiscount}" required/>
+      </div>
+
+      <div>
+        <label>Процент отстъпка:</label>
+        <input type="number" step="0.01" min="0" th:field="*{storeSettings.discountPercentage}" required/>
+      </div>
+    </fieldset>
+
+    <br>
+
+    <button type="submit">Създай магазин</button>
+  </form>
+
+  <a th:href="@{/}">⬅ Обратно към началната страница</a>
+</div>
+</body>
+</html>

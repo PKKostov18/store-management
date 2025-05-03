@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <title>Списък с магазини</title>
+    <link rel="stylesheet" th:href="@{/css/store-list.css}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="store-container">
+    <h1>🛒 Списък с магазини</h1>
+
+    <div class="card-grid" th:if="${store != null}">
+        <div class="store-card" th:each="store, stat : ${store}">
+            <div class="store-header">
+                <span class="store-icon"><i class="bi bi-shop"></i></span>
+                <h2 th:text="${store.name}">Име на магазина</h2>
+            </div>
+            <form th:action="@{/store/{id}(id=${store.id})}" method="get">
+                <button type="submit">Виж детайли</button>
+            </form>
+        </div>
+    </div>
+
+    <p th:if="${store.empty}" class="no-stores">Няма добавени магазини.</p>
+
+    <div class="back-link">
+        <a th:href="@{/}">⬅ Обратно към началната страница</a>
+    </div>
+</div>
+
+</body>
+</html>

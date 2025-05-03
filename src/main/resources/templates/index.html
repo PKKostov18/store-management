@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="bg">
+<head>
+  <meta charset="UTF-8">
+  <title>Store Management</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="main-card">
+  <h1>Добре дошли в Store Management</h1>
+
+  <div class="button-container">
+    <a th:href="@{/store/add}">
+      <button><i class="bi bi-plus-circle"></i> Създай нов магазин</button>
+    </a>
+
+    <a th:href="@{/store/list}">
+      <button><i class="bi bi-shop"></i> Списък с магазини</button>
+    </a>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,94 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f4f7fb;
+    margin: 0;
+    padding: 30px;
+    color: #2c3e50;
+}
+
+.store-container {
+    max-width: 1000px;
+    margin: auto;
+    background: #fff;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 0 30px rgba(0,0,0,0.05);
+    text-align: center;
+}
+
+h1 {
+    font-size: 30px;
+    margin-bottom: 40px;
+    color: #34495e;
+}
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+}
+
+.store-card {
+    background-color: #ecf0f1;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease;
+}
+
+.store-card:hover {
+    transform: translateY(-5px);
+}
+
+.store-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    justify-content: center;
+}
+
+.store-icon i {
+    font-size: 24px;
+    color: #3498db;
+}
+
+.store-card h2 {
+    font-size: 18px;
+    margin: 0;
+}
+
+.store-card form button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    font-size: 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.store-card form button:hover {
+    background-color: #2980b9;
+}
+
+.no-stores {
+    margin-top: 20px;
+    font-style: italic;
+    color: #888;
+}
+
+.back-link {
+    margin-top: 40px;
+}
+
+.back-link a {
+    text-decoration: none;
+    color: #3498db;
+    font-weight: bold;
+}
+
+.back-link a:hover {
+    text-decoration: underline;
+}
