@@ -1,16 +1,25 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="bg">
 <head>
+  <meta charset="UTF-8">
   <title>Добавяне на касиер</title>
+  <link rel="stylesheet" th:href="@{/css/cashier-add.css}">
 </head>
 <body>
-<h2>Добави нов касиер в <span th:text="${store.name}"></span></h2>
+<div class="container">
+  <h2>👨‍💼 Добави нов касиер в <span th:text="${store.name}"></span></h2>
 
-<form th:action="@{'/store/' + ${store.id} + '/cashiers/add'}" th:object="${cashier}" method="post">
-  Име: <input type="text" th:field="*{name}"/><br/>
-  Месечна заплата: <input type="number" step="0.01" th:field="*{monthlySalary}"/><br/>
-  <button type="submit">Добави касиер</button>
-</form>
+  <form th:action="@{'/store/' + ${store.id} + '/cashiers/add'}" th:object="${cashier}" method="post">
+    <label>Име:</label>
+    <input type="text" th:field="*{name}" required/>
 
+    <label>Месечна заплата:</label>
+    <input type="number" step="0.01" th:field="*{monthlySalary}" required/>
+
+    <button type="submit">Добави касиер</button>
+  </form>
+
+  <a th:href="@{'/store/' + ${store.id}}">⬅ Обратно към магазина</a>
+</div>
 </body>
 </html>

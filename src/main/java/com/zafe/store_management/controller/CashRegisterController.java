@@ -31,7 +31,6 @@ public class CashRegisterController {
         register.setCashier(cashier);
         registerRepo.save(register);
 
-        // Връщане към магазина
         return "redirect:/store/" + register.getStore().getId();
     }
 

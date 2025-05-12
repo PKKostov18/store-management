@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="bg">
 <head>
+    <meta charset="UTF-8">
     <title>Добавяне на продукт</title>
+    <link rel="stylesheet" th:href="@{/css/product-add.css}">
     <script>
         function toggleExpirationDate() {
             var checkbox = document.getElementById("hasExpirationDate");
@@ -11,36 +13,44 @@
     </script>
 </head>
 <body>
-<h2>Добави нов продукт</h2>
+<div class="container">
+    <h2>➕ Добави нов продукт</h2>
 
-<form th:action="@{'/store/' + ${store.id} + '/products/add'}" th:object="${product}" method="post">
-    <input type="hidden" th:field="*{store.id}" />
+    <form th:action="@{'/store/' + ${store.id} + '/products/add'}" th:object="${product}" method="post">
+        <input type="hidden" th:field="*{store.id}" />
 
-    Име: <input type="text" th:field="*{name}"/><br/>
-    Цена на доставка: <input type="number" step="0.01" th:field="*{deliveryPrice}"/><br/>
-    Количество: <input type="number" th:field="*{quantity}"/><br/>
+        <label>Име:</label>
+        <input type="text" th:field="*{name}" required/>
 
-    Категория:
-    <select th:field="*{category}">
-        <option th:each="c : ${categories}" th:value="${c}" th:text="${c}"></option>
-    </select><br/>
+        <label>Цена на доставка:</label>
+        <input type="number" step="0.01" th:field="*{deliveryPrice}" required/>
 
-    <label>
-        <input type="checkbox" id="hasExpirationDate" th:field="*{hasExpirationDate}" onchange="toggleExpirationDate()"/>
-        Има срок на годност
-    </label><br/>
+        <label>Количество:</label>
+        <input type="number" th:field="*{quantity}" required/>
 
-    <div id="expirationDiv" style="display:none;">
-        Срок на годност: <input type="date" th:field="*{expirationDate}"/><br/>
-    </div>
+        <label>Категория:</label>
+        <select th:field="*{category}">
+            <option th:each="c : ${categories}" th:value="${c}" th:text="${c}"></option>
+        </select>
 
-    <button type="submit">Добави</button>
-</form>
+        <label>
+            <input type="checkbox" id="hasExpirationDate" th:field="*{hasExpirationDate}" onchange="toggleExpirationDate()"/>
+            Има срок на годност
+        </label>
+
+        <div id="expirationDiv" style="display:none;">
+            <label>Срок на годност:</label>
+            <input type="date" th:field="*{expirationDate}"/>
+        </div>
+
+        <button type="submit">Добави</button>
+    </form>
+
+    <a th:href="@{'/store/' + ${store.id}}">⬅ Обратно към магазина</a>
+</div>
 
 <script>
-    // Показва/скрива датата при зареждане на формата (ако е отметнато)
     window.onload = toggleExpirationDate;
 </script>
-
 </body>
 </html>

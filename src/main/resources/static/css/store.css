@@ -29,17 +29,24 @@ h1, h2 {
     color: #2c3e50;
     margin-bottom: 15px;
 }
+
+/* Обновено: касовите апарати няма да се разтягат */
 .register-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: 1.5rem;
+    justify-content: center;
 }
 
 .register-card {
-    flex: 1 1 220px;
+    width: 240px;
+    min-width: 240px;
+    max-width: 240px;
+    background-color: #f8f9fa;
     border-radius: 1rem;
     padding: 20px;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 1px solid #ccc;
 }
 
 .register-card:hover {
@@ -68,17 +75,9 @@ h1, h2 {
     opacity: 0.8;
 }
 
-.bg-success {
-    background-color: #27ae60;
-}
-
-.bg-danger {
-    background-color: #e74c3c;
-}
-
 @media (max-width: 768px) {
     .register-card {
-        flex: 1 1 100%;
+        width: 100%;
     }
 }
 
@@ -128,19 +127,80 @@ td {
 }
 
 .product-grid {
+    padding-left:20px;
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
     justify-content: start;
 }
 
-/* 🎨 Обновен дизайн на продуктите */
+/* ≥ 768px: 1 продукта на ред */
+@media (min-width: 500px) {
+    .product-grid.has-four-or-more {
+        padding-left: 20%;
+    }
+
+     .product-card {
+        flex: 0 1 calc(33.333% - 20px);
+        max-width: calc(33.333% - 20px);
+    }
+}
+
+/* ≥ 768px: 2 продукта на ред */
+@media (min-width: 768px) {
+    .product-grid.has-four-or-more {
+        padding-left: 5%;
+    }
+
+    .product-card {
+        flex: 0 1 calc(33.333% - 20px);
+        max-width: calc(33.333% - 20px);
+    }
+}
+
+/* ≥ 992px: 3 продукта на ред */
+@media (min-width: 992px) {
+    .product-grid.has-four-or-more {
+        padding-left: 0;
+    }
+
+    .product-card {
+        flex: 0 1 calc(25% - 20px);
+        max-width: calc(25% - 20px);
+    }
+}
+
+/* ≥ 992px: 3-4 продукта на ред */
+@media (min-width: 1200px) {
+    .product-grid.has-four-or-more {
+        padding-left: 7%;
+    }
+
+     .product-card {
+        flex: 0 1 calc(25% - 20px);
+        max-width: calc(25% - 20px);
+    }
+}
+
+/* ≥ 992px: 3-4 продукта на ред */
+@media (min-width: 1400px) {
+    .product-grid.has-four-or-more {
+        padding-left: 10px;
+    }
+
+     .product-card {
+        flex: 0 1 calc(25% - 20px);
+        max-width: calc(25% - 20px);
+    }
+}
+
 .product-card {
     background: #f8f9fa;
     border-radius: 1rem;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     padding: 1.5rem;
-    width: 18rem;
+    flex: 1 1 280px; /* 👈 flex-grow: 1, shrink: 1, basis: 280px */
+    max-width: 300px; /* 👈 ограничава прекаленото разширяване */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -170,7 +230,6 @@ td {
     color: #28a745;
 }
 
-/* 🛒 Бутон за количка */
 .btn-cart {
     background-color: #0d6efd;
     color: white;
@@ -192,12 +251,6 @@ td {
 
 .btn-cart:active {
     transform: scale(0.97);
-}
-
-.row-cols-1 > .col,
-.row-cols-sm-2 > .col,
-.row-cols-md-3 > .col {
-    display: flex;
 }
 
 .expiration-date {
