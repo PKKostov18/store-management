@@ -14,7 +14,7 @@
 </head>
 <body>
 <div class="container">
-    <h2>➕ Добави нов продукт</h2>
+    <h2>➕ Добави нов продукт в <span th:text="${store.name}"></span></h2>
 
     <form th:action="@{'/store/' + ${store.id} + '/products/add'}" th:object="${product}" method="post">
         <input type="hidden" th:field="*{store.id}" />

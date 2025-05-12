@@ -30,7 +30,27 @@ h1, h2 {
     margin-bottom: 15px;
 }
 
-/* Обновено: касовите апарати няма да се разтягат */
+.unassign-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.25rem;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.unassign-btn:hover {
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+.unassign-btn:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+
 .register-container {
     display: flex;
     flex-wrap: wrap;

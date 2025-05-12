@@ -3,24 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <title>Детайли за магазин</title>
-    <link rel="stylesheet" th:href="@{/css/store.css}">
+    <link rel="stylesheet" th:href="@{/css/store-details.css}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 <body>
 <div class="container my-4">
     <h1 class="store-title" th:text="${store.name}">Store Name</h1>
 
-    <!-- Действия – Преместени най-отгоре -->
-    <div class="mb-4 d-flex gap-2 justify-content-center">
-        <a class="btn btn-success" th:href="@{'/store/' + ${store.id} + '/products/add'}">✚ Добави продукт</a>
-        <a class="btn btn-primary" th:href="@{'/store/' + ${store.id} + '/cashiers/add'}">✚ Добави касиер</a>
+    <!-- Действия -->
+    <div class="action-bar">
+        <a class="btn btn-success" th:href="@{'/store/' + ${store.id} + '/products/add'}">
+            <i class="bi bi-plus-circle"></i> Добави продукт
+        </a>
+        <a class="btn btn-primary" th:href="@{'/store/' + ${store.id} + '/cashiers/add'}">
+            <i class="bi bi-person-plus-fill"></i> Добави касиер
+        </a>
     </div>
 
     <!-- Продукти -->
-    <section class="mt-5">
+    <section>
         <h2>Продукти в магазина</h2>
         <div class="table-wrapper">
-            <table class="table table-bordered">
+            <table>
                 <thead>
                 <tr>
                     <th>Име</th>
@@ -31,29 +36,31 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="product : ${products}">
-                    <td th:text="${product.name}"></td>
-                    <td th:text="${product.category}"></td>
-                    <td th:text="${product.quantity}"></td>
-                    <td th:text="${product.deliveryPrice} + ' лв.'"></td>
+                <tr th:each="product : ${products}"
+                    th:classappend="${product.hasExpirationDate and product.expirationDate.isBefore(T(java.time.LocalDate).now())} ? 'expired-product'">
+                    <td th:text="${product.name}">Име</td>
+                    <td th:text="${product.category}">Категория</td>
+                    <td th:text="${product.quantity}">0</td>
+                    <td th:text="${product.deliveryPrice} + ' лв.'">0.00 лв.</td>
                     <td>
                         <span th:if="${product.hasExpirationDate}" th:text="${#temporals.format(product.expirationDate, 'dd.MM.yyyy')}"></span>
                         <span th:unless="${product.hasExpirationDate}">-</span>
                     </td>
                 </tr>
                 <tr th:if="${products.empty}">
-                    <td colspan="5">Няма добавени продукти</td>
+                    <td colspan="5" class="text-center">Няма добавени продукти</td>
                 </tr>
                 </tbody>
             </table>
         </div>
     </section>
 
+
     <!-- Касиери -->
-    <section class="mt-5">
+    <section>
         <h2>Касиери</h2>
         <div class="table-wrapper">
-            <table class="table table-bordered">
+            <table>
                 <thead>
                 <tr>
                     <th>Име</th>
@@ -62,23 +69,22 @@
                 </thead>
                 <tbody>
                 <tr th:each="cashier : ${store.cashiers}">
-                    <td th:text="${cashier.name}"></td>
-                    <td th:text="${cashier.monthlySalary} + ' лв.'"></td>
+                    <td th:text="${cashier.name}">Име</td>
+                    <td th:text="${cashier.monthlySalary} + ' лв.'">0.00 лв.</td>
                 </tr>
                 <tr th:if="${store.cashiers.empty}">
-                    <td colspan="2">Няма добавени касиери</td>
+                    <td colspan="2" class="text-center">Няма добавени касиери</td>
                 </tr>
                 </tbody>
             </table>
         </div>
     </section>
 
-    <div class="back-link mt-4">
-        <a th:href="@{'/store/' + ${store.id}}">⬅ Обратно към списъка</a>
+    <div class="back-link">
+        <a th:href="@{'/store/' + ${store.id}}">⬅ Обратно към магазина</a>
     </div>
 </div>
 
-<!-- JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/js/store.js"></script>
 </body>

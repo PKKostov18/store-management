@@ -28,10 +28,13 @@
           <i class="bi bi-pc-display" style="font-size: 1.5rem;"></i>
         </div>
 
-        <div th:if="${register.cashier != null}">
-          <div class="d-flex align-items-center gap-2 text-white">
-            <span th:text="'Касиер: ' + ${register.cashier.name}"></span>
-          </div>
+        <div th:if="${register.cashier != null}" class="d-flex justify-content-between align-items-center text-white">
+          <span th:text="'Касиер: ' + ${register.cashier.name}"></span>
+          <form th:action="@{'/cashRegister/' + ${register.id} + '/unassign'}" method="post" class="m-0">
+            <button type="submit" class="unassign-btn" title="Премахни касиера">
+              <i class="bi bi-x-circle-fill"></i>
+            </button>
+          </form>
         </div>
 
         <div th:unless="${register.cashier != null}" class="text-center mt-3">
@@ -49,32 +52,30 @@
     </div>
   </section>
 
-
   <!-- Продукти -->
   <section class="mt-5">
     <h2 class="mb-4">🛒 Продукти в магазина</h2>
-      <div class="product-grid d-flex flex-wrap gap-4 justify-content-start">
-        <div class="product-card styled-card" th:each="entry : ${productPrices} ">
-          <div class="card-body d-flex flex-column justify-content-between">
-            <div>
-              <h5 class="card-title" th:text="${entry.key.name}">Име</h5>
-              <p class="card-price fw-bold fs-5 text-success" th:text="${entry.value} + ' лв.'">Цена</p>
-              <p class="expiration-date">
-                <span th:if="${entry.key.hasExpirationDate}"
-                      th:text="'Годен до: ' + ${#temporals.format(entry.key.expirationDate, 'dd.MM.yyyy')}"></span>
-                            <span th:unless="${entry.key.hasExpirationDate}">
-                  <i class="bi bi-infinity"></i> Без срок на годност
-                </span>
-              </p>
-            </div>
-            <button class="btn btn-cart mt-3">
-              🛒 Добави в количката
-            </button>
+    <div class="product-grid d-flex flex-wrap gap-4 justify-content-start">
+      <div class="product-card styled-card"
+           th:each="entry : ${productPrices}"
+           th:if="${!entry.key.hasExpirationDate or entry.key.expirationDate > T(java.time.LocalDate).now()}">
+        <div class="card-body d-flex flex-column justify-content-between">
+          <div>
+            <h5 class="card-title" th:text="${entry.key.name}">Име</h5>
+            <p class="card-price fw-bold fs-5 text-success" th:text="${entry.value} + ' лв.'">Цена</p>
+            <p class="expiration-date">
+              <span th:if="${entry.key.hasExpirationDate}"
+                    th:text="'Годен до: ' + ${#temporals.format(entry.key.expirationDate, 'dd.MM.yyyy')}"></span>
+              <span th:unless="${entry.key.hasExpirationDate}">
+                <i class="bi bi-infinity"></i> Без срок на годност
+              </span>
+            </p>
           </div>
+          <button class="btn btn-cart mt-3">🛒 Добави в количката</button>
         </div>
+      </div>
     </div>
   </section>
-
 
   <!-- Линк за връщане -->
   <div class="back-link mt-4">
