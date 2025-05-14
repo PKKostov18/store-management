@@ -21,8 +21,17 @@ document.addEventListener("DOMContentLoaded", function () {
   const cartCount = document.getElementById("cart-count");
   const cartItemsList = document.getElementById("cart-items");
 
+  function getStoreId() {
+    const storeId = document.body.getAttribute("data-store-id");
+    return storeId ?? "default";
+  }
+
+  function getCartKey() {
+    return `cart-store-${getStoreId()}`;
+  }
+
   function getCart() {
-    const rawCart = localStorage.getItem("cart");
+    const rawCart = localStorage.getItem(getCartKey());
     try {
       const parsed = JSON.parse(rawCart);
       return Array.isArray(parsed) ? parsed : [];
@@ -32,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function saveCart(cart) {
-    localStorage.setItem("cart", JSON.stringify(cart));
+    localStorage.setItem(getCartKey(), JSON.stringify(cart));
   }
 
   function updateCartCount() {
