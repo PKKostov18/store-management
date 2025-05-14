@@ -1,11 +1,9 @@
 package com.zafe.store_management.controller;
 
 import com.zafe.store_management.model.*;
-import com.zafe.store_management.repository.CashierRepository;
-import com.zafe.store_management.repository.ProductRepository;
-import com.zafe.store_management.repository.StoreRepository;
+import com.zafe.store_management.service.CashierService;
 import com.zafe.store_management.service.ProductService;
-import jakarta.persistence.EntityNotFoundException;
+import com.zafe.store_management.service.StoreService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,16 +17,14 @@ import java.util.*;
 @RequestMapping("/store")
 public class StoreController {
 
-    private final StoreRepository storeRepository;
-    private final ProductRepository productRepository;
-    private final CashierRepository cashierRepository;
+    private final StoreService storeService;
     private final ProductService productService;
+    private final CashierService cashierService;
 
-    public StoreController(StoreRepository storeRepository, ProductRepository productRepository, CashierRepository cashierRepository, ProductService productService) {
-        this.storeRepository = storeRepository;
-        this.productRepository = productRepository;
-        this.cashierRepository = cashierRepository;
+    public StoreController( StoreService storeService, ProductService productService, CashierService cashierService) {
+        this.storeService = storeService;
         this.productService = productService;
+        this.cashierService = cashierService;
     }
 
     @GetMapping("/add")
@@ -44,29 +40,23 @@ public class StoreController {
         if (bindingResult.hasErrors()) {
             return "store-create";
         }
-        List<CashRegister> registers = new ArrayList<>();
-        for (int i = 0; i < registerCount; i++) {
-            registers.add(new CashRegister());
-        }
 
-        store.setCashRegisters(registers);
-        storeRepository.save(store);
+        storeService.createStoreWithRegisters(store, registerCount);
         return "index";
     }
 
     @GetMapping("/list")
     public String listStores(Model model) {
-        model.addAttribute("store", storeRepository.findAll());
+        model.addAttribute("store", storeService.findAll());
         return "store-list";
     }
 
     @GetMapping("/{id}/details")
     public String viewStoreDetails(@PathVariable Long id, Model model) {
-        Store store = storeRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Магазинът не е намерен"));
+        Store store = storeService.findById(id);
 
-        List<Product> products = productRepository.findByStoreId(id);
-        List<Cashier> availableCashiers = cashierRepository.findByStoreIdAndCashRegisterIsNull(id);
+        List<Product> products = productService.getProductsByStoreId(id);
+        List<Cashier> availableCashiers = cashierService.getAvailableCashiersForStore(id);
 
         model.addAttribute("store", store);
         model.addAttribute("products", products);
@@ -77,16 +67,10 @@ public class StoreController {
 
     @GetMapping("/{id}")
     public String showStore(@PathVariable Long id, Model model) {
-        Store store = storeRepository.findById(id).orElseThrow();
-        List<Product> products = productRepository.findByStoreId(id);
-        List<Cashier> availableCashiers = cashierRepository.findByStoreIdAndCashRegisterIsNull(id);
-        StoreSettings settings = store.getStoreSettings();
-
-        Map<Product, BigDecimal> productPrices = new LinkedHashMap<>();
-        for (Product product : products) {
-            BigDecimal sellingPrice = productService.calculateSellingPrice(product, settings);
-            productPrices.put(product, sellingPrice);
-        }
+        Store store = storeService.findById(id);
+        List<Product> products = productService.getProductsByStoreId(id);
+        List<Cashier> availableCashiers = cashierService.getAvailableCashiersForStore(id);
+        Map<Product, BigDecimal> productPrices = storeService.getProductsWithPrices(store);
 
         model.addAttribute("store", store);
         model.addAttribute("productPrices", productPrices);

@@ -2,8 +2,11 @@ package com.zafe.store_management.service;
 
 import com.zafe.store_management.model.Product;
 import com.zafe.store_management.model.ProductCategory;
+import com.zafe.store_management.model.Store;
 import com.zafe.store_management.model.StoreSettings;
 import com.zafe.store_management.repository.ProductRepository;
+import com.zafe.store_management.repository.StoreRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -14,9 +17,13 @@ import java.util.List;
 
 @Service
 public class ProductService {
+
     private final ProductRepository productRepository;
-    public ProductService(ProductRepository productRepository) {
+    private final StoreRepository storeRepository;
+
+    public ProductService(ProductRepository productRepository, StoreRepository storeRepository) {
         this.productRepository = productRepository;
+        this.storeRepository = storeRepository;
     }
 
     public void save(Product product) {
@@ -48,5 +55,22 @@ public class ProductService {
         }
 
         return priceWithMarkup.setScale(2, RoundingMode.HALF_UP);
+    }
+
+    public List<Product> getProductsByStoreId(Long storeId) {
+        return productRepository.findByStoreId(storeId);
+    }
+
+    public void saveProductForStore(Product product, Long storeId) {
+        Store store = storeRepository.findById(storeId)
+                .orElseThrow(() -> new EntityNotFoundException("Магазинът не е намерен"));
+
+        product.setStore(store);
+
+        if (!product.isHasExpirationDate()) {
+            product.setExpirationDate(null);
+        }
+
+        productRepository.save(product);
     }
 }

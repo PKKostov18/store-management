@@ -28,7 +28,8 @@ public class ProductController {
         Store store = storeRepository.findById(storeId).orElseThrow();
         Product product = new Product();
         product.setStore(store);
-        model.addAttribute("product", new Product());
+
+        model.addAttribute("product", product);
         model.addAttribute("categories", ProductCategory.values());
         model.addAttribute("store", store);
         return "product-add";
@@ -44,14 +45,7 @@ public class ProductController {
             return "product-add";
         }
 
-        Store store = storeRepository.findById(storeId).orElseThrow();
-        product.setStore(store);
-
-        if (!product.isHasExpirationDate()) {
-            product.setExpirationDate(null);
-        }
-
-        productService.save(product);
+        productService.saveProductForStore(product, storeId);
         return "redirect:/store/{storeId}";
     }
 

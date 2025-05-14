@@ -2,7 +2,8 @@ package com.zafe.store_management.controller;
 
 import com.zafe.store_management.model.Cashier;
 import com.zafe.store_management.model.Store;
-import com.zafe.store_management.repository.StoreRepository;
+import com.zafe.store_management.service.CashierService;
+import com.zafe.store_management.service.StoreService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,15 +14,17 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/store/{storeId}/cashiers")
 public class CashierController {
 
-    private final StoreRepository storeRepository;
+    private final CashierService cashierService;
+    private final StoreService storeService;
 
-    public CashierController(StoreRepository storeRepository) {
-        this.storeRepository = storeRepository;
+    public CashierController(CashierService cashierService, StoreService storeService) {
+        this.cashierService = cashierService;
+        this.storeService = storeService;
     }
 
     @GetMapping("/add")
     public String showAddCashierForm(@PathVariable Long storeId, Model model) {
-        Store store = storeRepository.findById(storeId).orElseThrow();
+        Store store = storeService.findById(storeId);
         model.addAttribute("store", store);
         model.addAttribute("cashier", new Cashier());
         return "cashier-add";
@@ -32,15 +35,14 @@ public class CashierController {
                              @ModelAttribute("cashier") @Valid Cashier cashier,
                              BindingResult result,
                              Model model) {
-        Store store = storeRepository.findById(storeId).orElseThrow();
 
         if (result.hasErrors()) {
+            Store store = storeService.findById(storeId);
             model.addAttribute("store", store);
             return "cashier-add";
         }
 
-        store.getCashiers().add(cashier);
-        storeRepository.save(store);
+        cashierService.addCashierToStore(storeId, cashier);
         return "redirect:/store/" + storeId;
     }
 }

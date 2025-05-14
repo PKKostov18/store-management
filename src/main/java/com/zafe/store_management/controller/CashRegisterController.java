@@ -4,9 +4,7 @@ import com.zafe.store_management.model.CashRegister;
 import com.zafe.store_management.model.Cashier;
 import com.zafe.store_management.repository.CashRegisterRepository;
 import com.zafe.store_management.repository.CashierRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
