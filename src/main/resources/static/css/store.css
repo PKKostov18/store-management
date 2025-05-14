@@ -1,6 +1,6 @@
 body {
     font-family: 'Segoe UI', sans-serif;
-    background-color: #f7f9fc;
+    background-color: #f4f7fb !important;
     color: #333;
     margin: 0;
     padding: 20px;
@@ -278,4 +278,38 @@ td {
     font-style: italic;
     color: #6c757d;
     font-size: 0.9rem;
+}
+
+.quantity-selector {
+  max-width: 130px;
+}
+
+.quantity-input {
+  width: 50px;
+  height: 30px;
+  padding: 2px 6px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.quantity-input::-webkit-inner-spin-button,
+.quantity-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.quantity-input {
+  -moz-appearance: textfield; /* за Firefox */
+}
+
+.btn-icon {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

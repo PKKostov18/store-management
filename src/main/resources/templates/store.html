@@ -71,7 +71,21 @@
               </span>
             </p>
           </div>
-          <button class="btn btn-cart mt-3">🛒 Добави в количката</button>
+          <div class="d-flex justify-content-start mt-3">
+            <div class="quantity-selector d-flex align-items-center">
+              <button class="btn btn-sm btn-outline-secondary btn-icon quantity-decrease">
+                <i class="bi bi-dash"></i>
+              </button>
+              <input type="number" class="form-control form-control-sm quantity-input mx-1 text-center" value="1" min="1">
+              <button class="btn btn-sm btn-outline-secondary btn-icon quantity-increase">
+                <i class="bi bi-plus"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-center mt-2">
+            <button class="btn btn-cart">🛒 Добави в количката</button>
+          </div>
         </div>
       </div>
     </div>
@@ -108,6 +122,60 @@
         </div>
       </div>
     </form>
+  </div>
+</div>
+
+<div id="cart-icon" role="button" tabindex="0" style="
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #0d6efd;
+  color: white;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+  cursor: pointer;
+  z-index: 999;
+">
+  <i class="bi bi-cart"></i>
+  <span id="cart-count" style="
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(50%, -50%);
+    background: red;
+    color: white;
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border-radius: 50%;
+    pointer-events: none;
+  ">0</span>
+</div>
+
+<!-- Cart Modal -->
+<div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="cartModalLabel">🛒 Твоята количка</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <ul id="cart-items" class="list-group"></ul>
+      </div>
+      <div class="modal-footer d-flex justify-content-between align-items-center">
+        <div class="fw-bold me-auto" id="cart-total-display"></div>
+        <div>
+          <button type="button" class="btn btn-success me-2" id="checkout-btn">Плащане</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Затвори</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 

@@ -1,6 +1,6 @@
 body {
     font-family: 'Segoe UI', sans-serif;
-    background-color: #eef1f5;
+    background-color: #f4f7fb !important;
     color: #1f2d3d;
     margin: 0;
     padding: 20px;
@@ -21,7 +21,7 @@ body {
     margin: auto;
     padding: 30px;
     background: #ffffff;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
     border-radius: 12px;
 }
 
