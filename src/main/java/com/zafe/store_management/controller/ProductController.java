@@ -1,5 +1,6 @@
 package com.zafe.store_management.controller;
 
+import com.zafe.store_management.exception.InsufficientQuantityException;
 import com.zafe.store_management.model.Product;
 import com.zafe.store_management.model.ProductCategory;
 import com.zafe.store_management.model.Store;
@@ -10,6 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/store/{storeId}/products")
@@ -54,5 +58,21 @@ public class ProductController {
         model.addAttribute("products", productService.findAll());
         return "product-list";
     }
+
+    @ResponseBody
+    @PostMapping("/checkQuantity")
+    public Map<String, Integer> checkQuantity(@PathVariable Long storeId,
+                                              @RequestParam String productName,
+                                              @RequestParam int quantity) {
+
+        productService.checkProductQuantity(productName, storeId, quantity);
+
+        int availableQuantity = productService.getAvailableQuantity(productName, storeId);
+
+        Map<String, Integer> response = new HashMap<>();
+        response.put("availableQuantity", availableQuantity);
+        return response;
+    }
+
 }
 

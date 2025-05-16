@@ -1,5 +1,6 @@
 package com.zafe.store_management.service;
 
+import com.zafe.store_management.exception.InsufficientQuantityException;
 import com.zafe.store_management.model.Product;
 import com.zafe.store_management.model.ProductCategory;
 import com.zafe.store_management.model.Store;
@@ -14,6 +15,7 @@ import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductService {
@@ -72,5 +74,24 @@ public class ProductService {
         }
 
         productRepository.save(product);
+    }
+
+    public Optional<Product> getProductByNameAndStoreId(String name, Long storeId) {
+        return productRepository.findByNameAndStoreId(name, storeId);
+    }
+
+    public void checkProductQuantity(String productName, Long storeId, int requestedQuantity) {
+        Product product = getProductByNameAndStoreId(productName, storeId)
+                .orElseThrow(() -> new RuntimeException("Продуктът не е намерен"));
+
+        if (requestedQuantity > product.getQuantity()) {
+            throw new InsufficientQuantityException(productName, requestedQuantity, product.getQuantity());
+        }
+    }
+
+    public int getAvailableQuantity(String productName, Long storeId) {
+        return getProductByNameAndStoreId(productName, storeId)
+                .map(Product::getQuantity)
+                .orElseThrow(() -> new RuntimeException("Продуктът не е намерен"));
     }
 }
