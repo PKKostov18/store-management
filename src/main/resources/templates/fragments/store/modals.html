@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="all-modals">
+  <!-- Assign Cashier Modal -->
+  <div class="modal fade" id="assignCashierModal" tabindex="-1" aria-labelledby="assignCashierModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <form method="post" id="assignCashierForm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="assignCashierModalLabel">Сложи касиер на каса</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Затвори"></button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" name="cashRegisterId" id="cashRegisterId" />
+            <div class="mb-3">
+              <select class="form-select" name="cashierId" id="cashierId" required>
+                <option value="" disabled selected hidden>Избери касиер</option>
+                <option th:each="cashier : ${availableCashiers}"
+                        th:value="${cashier.id}"
+                        th:text="${cashier.name}"></option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-success">Запази</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Cart Modal -->
+  <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="cartModalLabel">🛒 Твоята количка</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <ul id="cart-items" class="list-group"></ul>
+        </div>
+        <div class="modal-footer d-flex justify-content-between align-items-center">
+          <div class="fw-bold me-auto" id="cart-total-display"></div>
+          <div>
+            <button type="button" class="btn btn-success me-2" id="checkout-btn">Плащане</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Затвори</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Error Modal -->
+  <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content border-danger">
+        <div class="modal-header bg-danger text-white d-flex align-items-center">
+          <i class="bi bi-exclamation-triangle-fill fs-3 me-2"></i>
+          <h5 class="modal-title" id="errorModalLabel">Грешка</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body" id="errorModalBody"></div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Разбрах</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirm Checkout Modal -->
+  <div class="modal fade" id="confirmCheckoutModal" tabindex="-1" aria-labelledby="confirmCheckoutModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <form method="post" action="/receipt/checkout" id="checkoutForm">
+        <input type="hidden" name="hasMoney" id="hasMoneyInput">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="confirmCheckoutModalLabel">Потвърди плащането</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">Сигурни ли сте, че имате достатъчно пари за плащането?</div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success">✅ Имам пари</button>
+            <button type="button" class="btn btn-danger">❌ Нямам пари</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Select Cashier Modal -->
+  <div class="modal fade" id="selectCashierModal" tabindex="-1" aria-labelledby="selectCashierModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="selectCashierModalLabel">Изберете касиер</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <select class="form-select" id="selectAssignedCashier" required>
+            <option value="" disabled selected hidden>Изберете касиер...</option>
+          </select>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" id="confirmSelectedCashierBtn">Продължи с плащане</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Success Modal -->
+  <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content border-success">
+        <div class="modal-header bg-success text-white">
+          <h5 class="modal-title" id="successModalLabel">✅ Успешно плащане</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Затвори"></button>
+        </div>
+        <div class="modal-body" id="successModalBody"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cart Icon -->
+  <div id="cart-icon" role="button" tabindex="0">
+    <i class="bi bi-cart"></i>
+    <span id="cart-count">0</span>
+  </div>
+
+</div>
+</body>
+</html>

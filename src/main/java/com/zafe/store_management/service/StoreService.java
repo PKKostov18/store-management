@@ -1,5 +1,6 @@
 package com.zafe.store_management.service;
 
+import com.zafe.store_management.exception.StoreNotFoundException;
 import com.zafe.store_management.model.CashRegister;
 import com.zafe.store_management.model.Product;
 import com.zafe.store_management.model.Store;
@@ -18,11 +19,9 @@ import java.util.Map;
 public class StoreService {
 
     private final StoreRepository storeRepository;
-    private final ProductService productService;
 
-    public StoreService(StoreRepository storeRepository, ProductService productService) {
+    public StoreService(StoreRepository storeRepository) {
         this.storeRepository = storeRepository;
-        this.productService = productService;
     }
 
     public Store save(Store store) {
@@ -35,28 +34,15 @@ public class StoreService {
 
     public Store findById(Long id) {
         return storeRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Магазинът не е намерен"));
+                .orElseThrow(() -> new StoreNotFoundException(id));
     }
 
-    public Map<Product, BigDecimal> getProductsWithPrices(Store store) {
-        List<Product> products = productService.getProductsByStoreId(store.getId());
-        StoreSettings settings = store.getStoreSettings();
-
-        Map<Product, BigDecimal> productPrices = new LinkedHashMap<>();
-        for (Product product : products) {
-            BigDecimal sellingPrice = productService.calculateSellingPrice(product, settings);
-            productPrices.put(product, sellingPrice);
-        }
-
-        return productPrices;
-    }
-
-    public Store createStoreWithRegisters(Store store, int registerCount) {
+    public void createStoreWithRegisters(Store store, int registerCount) {
         List<CashRegister> registers = new ArrayList<>();
         for (int i = 0; i < registerCount; i++) {
             registers.add(new CashRegister());
         }
         store.setCashRegisters(registers);
-        return storeRepository.save(store);
+        storeRepository.save(store);
     }
 }

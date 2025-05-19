@@ -1,3 +1,4 @@
+/* === Основни стилове === */
 body {
     font-family: 'Segoe UI', sans-serif;
     background-color: #f4f7fb !important;
@@ -6,6 +7,12 @@ body {
     padding: 20px;
 }
 
+h1, h2 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+}
+
+/* === Заглавие на магазина === */
 .store-title {
     text-align: center;
     font-size: 2.5rem;
@@ -16,91 +23,17 @@ body {
     max-width: 80%;
 }
 
+/* === Контейнер === */
 .container {
     max-width: 1500px;
     margin: auto;
     padding: 20px;
     background: white;
-    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
 }
 
-h1, h2 {
-    color: #2c3e50;
-    margin-bottom: 15px;
-}
-
-.unassign-btn {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 1.25rem;
-    cursor: pointer;
-    opacity: 0.7;
-    transition: opacity 0.2s ease, transform 0.2s ease;
-}
-
-.unassign-btn:hover {
-    opacity: 1;
-    transform: scale(1.2);
-}
-
-.unassign-btn:focus {
-    outline: none;
-    box-shadow: none;
-}
-
-
-.register-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-    justify-content: center;
-}
-
-.register-card {
-    width: 240px;
-    min-width: 240px;
-    max-width: 240px;
-    background-color: #f8f9fa;
-    border-radius: 1rem;
-    padding: 20px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    border: 1px solid #ccc;
-}
-
-.register-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-}
-
-.register-active {
-    background-color: #27ae60;
-    color: white;
-    border: none;
-}
-
-.register-inactive {
-    background-color: #e74c3c;
-    color: white;
-    border: none;
-}
-
-.register-card h5 {
-    font-size: 1.2rem;
-    font-weight: 600;
-}
-
-.register-card i {
-    opacity: 0.8;
-}
-
-@media (max-width: 768px) {
-    .register-card {
-        width: 100%;
-    }
-}
-
+/* === Таблица === */
 .table-wrapper {
     overflow-x: auto;
     margin-bottom: 30px;
@@ -126,12 +59,67 @@ td {
     padding: 8px;
 }
 
+/* === Бутони за действие === */
 .actions {
     display: flex;
     gap: 10px;
     margin-top: 20px;
 }
 
+.unassign-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.25rem;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.unassign-btn:hover {
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+.unassign-btn:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.btn-cart {
+    background-color: #0d6efd;
+    color: white;
+    border: none;
+    padding: 0.6rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+.btn-cart:hover {
+    background-color: #0b5ed7;
+    transform: scale(1.03);
+}
+
+.btn-cart:active {
+    transform: scale(0.97);
+}
+
+.btn-icon {
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    font-size: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* === Връзка за връщане назад === */
 .back-link {
     margin-top: 40px;
 }
@@ -146,72 +134,58 @@ td {
     text-decoration: underline;
 }
 
+/* === Контейнери за касови апарати === */
+.register-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: center;
+}
+
+.register-card {
+    width: 240px;
+    min-width: 240px;
+    max-width: 240px;
+    background-color: #f8f9fa;
+    border-radius: 1rem;
+    padding: 20px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 1px solid #ccc;
+}
+
+.register-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.register-card h5 {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.register-card i {
+    opacity: 0.8;
+}
+
+.register-active {
+    background-color: #27ae60;
+    color: white;
+    border: none;
+}
+
+.register-inactive {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+}
+
+/* === Продуктова решетка === */
 .product-grid {
-    padding-left:20px;
+    padding-left: 20px;
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
     justify-content: start;
-}
-
-/* ≥ 768px: 1 продукта на ред */
-@media (min-width: 500px) {
-    .product-grid.has-four-or-more {
-        padding-left: 20%;
-    }
-
-     .product-card {
-        flex: 0 1 calc(33.333% - 20px);
-        max-width: calc(33.333% - 20px);
-    }
-}
-
-/* ≥ 768px: 2 продукта на ред */
-@media (min-width: 768px) {
-    .product-grid.has-four-or-more {
-        padding-left: 5%;
-    }
-
-    .product-card {
-        flex: 0 1 calc(33.333% - 20px);
-        max-width: calc(33.333% - 20px);
-    }
-}
-
-/* ≥ 992px: 3 продукта на ред */
-@media (min-width: 992px) {
-    .product-grid.has-four-or-more {
-        padding-left: 0;
-    }
-
-    .product-card {
-        flex: 0 1 calc(25% - 20px);
-        max-width: calc(25% - 20px);
-    }
-}
-
-/* ≥ 992px: 3-4 продукта на ред */
-@media (min-width: 1200px) {
-    .product-grid.has-four-or-more {
-        padding-left: 7%;
-    }
-
-     .product-card {
-        flex: 0 1 calc(25% - 20px);
-        max-width: calc(25% - 20px);
-    }
-}
-
-/* ≥ 992px: 3-4 продукта на ред */
-@media (min-width: 1400px) {
-    .product-grid.has-four-or-more {
-        padding-left: 10px;
-    }
-
-     .product-card {
-        flex: 0 1 calc(25% - 20px);
-        max-width: calc(25% - 20px);
-    }
 }
 
 .product-card {
@@ -219,8 +193,8 @@ td {
     border-radius: 1rem;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     padding: 1.5rem;
-    flex: 1 1 280px; /* 👈 flex-grow: 1, shrink: 1, basis: 280px */
-    max-width: 300px; /* 👈 ограничава прекаленото разширяване */
+    flex: 1 1 280px;
+    max-width: 300px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -250,29 +224,6 @@ td {
     color: #28a745;
 }
 
-.btn-cart {
-    background-color: #0d6efd;
-    color: white;
-    border: none;
-    padding: 0.6rem 1rem;
-    border-radius: 0.5rem;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    transition: background-color 0.2s ease, transform 0.15s ease;
-}
-
-.btn-cart:hover {
-    background-color: #0b5ed7;
-    transform: scale(1.03);
-}
-
-.btn-cart:active {
-    transform: scale(0.97);
-}
-
 .expiration-date {
     margin-top: auto;
     font-style: italic;
@@ -280,36 +231,116 @@ td {
     font-size: 0.9rem;
 }
 
+/* === Медийни заявки за product-grid === */
+@media (min-width: 500px) {
+    .product-grid.has-four-or-more {
+        padding-left: 20%;
+    }
+
+    .product-card {
+        flex: 0 1 calc(33.333% - 20px);
+        max-width: calc(33.333% - 20px);
+    }
+}
+
+@media (min-width: 768px) {
+    .register-card {
+        width: 100%;
+    }
+
+    .product-grid.has-four-or-more {
+        padding-left: 5%;
+    }
+
+    .product-card {
+        flex: 0 1 calc(33.333% - 20px);
+        max-width: calc(33.333% - 20px);
+    }
+}
+
+@media (min-width: 992px) {
+    .product-grid.has-four-or-more {
+        padding-left: 0;
+    }
+
+    .product-card {
+        flex: 0 1 calc(25% - 20px);
+        max-width: calc(25% - 20px);
+    }
+}
+
+@media (min-width: 1200px) {
+    .product-grid.has-four-or-more {
+        padding-left: 7%;
+    }
+
+    .product-card {
+        flex: 0 1 calc(25% - 20px);
+        max-width: calc(25% - 20px);
+    }
+}
+
+@media (min-width: 1400px) {
+    .product-grid.has-four-or-more {
+        padding-left: 10px;
+    }
+
+    .product-card {
+        flex: 0 1 calc(25% - 20px);
+        max-width: calc(25% - 20px);
+    }
+}
+
+/* === Количество === */
 .quantity-selector {
-  max-width: 130px;
+    max-width: 130px;
 }
 
 .quantity-input {
-  width: 50px;
-  height: 30px;
-  padding: 2px 6px;
-  font-size: 0.85rem;
-  font-weight: bold;
-  border-radius: 4px;
-  text-align: center;
+    width: 50px;
+    height: 30px;
+    padding: 2px 6px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    border-radius: 4px;
+    text-align: center;
+    -moz-appearance: textfield;
 }
 
 .quantity-input::-webkit-inner-spin-button,
 .quantity-input::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+    -webkit-appearance: none;
+    margin: 0;
 }
 
-.quantity-input {
-  -moz-appearance: textfield; /* за Firefox */
+/* === Икона количка === */
+#cart-icon {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #0d6efd;
+    color: white;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    cursor: pointer;
+    z-index: 999;
 }
 
-.btn-icon {
-  width: 30px;
-  height: 30px;
-  padding: 0;
-  font-size: 0.75rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+#cart-count {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(50%, -50%);
+    background: red;
+    color: white;
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border-radius: 50%;
+    pointer-events: none;
 }

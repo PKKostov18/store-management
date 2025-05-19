@@ -70,7 +70,7 @@ public class StoreController {
         Store store = storeService.findById(id);
         List<Product> products = productService.getProductsByStoreId(id);
         List<Cashier> availableCashiers = cashierService.getAvailableCashiersForStore(id);
-        Map<Product, BigDecimal> productPrices = storeService.getProductsWithPrices(store);
+        Map<Product, BigDecimal> productPrices = productService.getProductsWithPrices(store);
 
         model.addAttribute("store", store);
         model.addAttribute("productPrices", productPrices);

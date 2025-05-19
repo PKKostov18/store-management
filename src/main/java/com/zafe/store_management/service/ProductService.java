@@ -1,6 +1,8 @@
 package com.zafe.store_management.service;
 
 import com.zafe.store_management.exception.InsufficientQuantityException;
+import com.zafe.store_management.exception.ProductNotFoundException;
+import com.zafe.store_management.exception.StoreNotFoundException;
 import com.zafe.store_management.model.Product;
 import com.zafe.store_management.model.ProductCategory;
 import com.zafe.store_management.model.Store;
@@ -14,7 +16,9 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -65,7 +69,7 @@ public class ProductService {
 
     public void saveProductForStore(Product product, Long storeId) {
         Store store = storeRepository.findById(storeId)
-                .orElseThrow(() -> new EntityNotFoundException("Магазинът не е намерен"));
+                .orElseThrow(() -> new StoreNotFoundException(storeId));
 
         product.setStore(store);
 
@@ -82,7 +86,7 @@ public class ProductService {
 
     public void checkProductQuantity(String productName, Long storeId, int requestedQuantity) {
         Product product = getProductByNameAndStoreId(productName, storeId)
-                .orElseThrow(() -> new RuntimeException("Продуктът не е намерен"));
+                .orElseThrow(() -> new ProductNotFoundException(productName, storeId));
 
         if (requestedQuantity > product.getQuantity()) {
             throw new InsufficientQuantityException(productName, requestedQuantity, product.getQuantity());
@@ -92,6 +96,19 @@ public class ProductService {
     public int getAvailableQuantity(String productName, Long storeId) {
         return getProductByNameAndStoreId(productName, storeId)
                 .map(Product::getQuantity)
-                .orElseThrow(() -> new RuntimeException("Продуктът не е намерен"));
+                .orElseThrow(() -> new ProductNotFoundException(productName, storeId));
+    }
+
+    public Map<Product, BigDecimal> getProductsWithPrices(Store store) {
+        List<Product> products = getProductsByStoreId(store.getId());
+        StoreSettings settings = store.getStoreSettings();
+
+        Map<Product, BigDecimal> productPrices = new LinkedHashMap<>();
+        for (Product product : products) {
+            BigDecimal sellingPrice = calculateSellingPrice(product, settings);
+            productPrices.put(product, sellingPrice);
+        }
+
+        return productPrices;
     }
 }

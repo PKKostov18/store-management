@@ -1,5 +1,6 @@
 package com.zafe.store_management.service;
 
+import com.zafe.store_management.exception.StoreNotFoundException;
 import com.zafe.store_management.model.Cashier;
 import com.zafe.store_management.model.Store;
 import com.zafe.store_management.repository.CashierRepository;
@@ -34,7 +35,7 @@ public class CashierService {
 
     public void addCashierToStore(Long storeId, Cashier cashier) {
         Store store = storeRepository.findById(storeId)
-                .orElseThrow(() -> new EntityNotFoundException("Store not found"));
+                .orElseThrow(() -> new StoreNotFoundException(storeId));
         store.getCashiers().add(cashier);
         storeRepository.save(store);
     }

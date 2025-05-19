@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="cash-registers">
+  <section>
+    <h2 class="mb-4">🖥️ Касови апарати</h2>
+    <div class="register-container">
+      <div th:each="register, iterStat : ${store.cashRegisters}"
+           class="register-card position-relative"
+           th:classappend="${register.cashier != null} ? ' register-active' : ' register-inactive'">
+
+        <div class="d-flex align-items-center justify-content-between mb-3">
+          <h5 class="mb-0" th:text="'Апарат №' + ${iterStat.index + 1}"></h5>
+          <i class="bi bi-pc-display" style="font-size: 1.5rem;"></i>
+        </div>
+
+        <div th:if="${register.cashier != null}" class="d-flex justify-content-between align-items-center text-white">
+          <span th:text="'Касиер: ' + ${register.cashier.name}"
+                th:attr="data-cashier-id=${register.cashier.id}"></span>
+          <form th:action="@{'/cashRegister/' + ${register.id} + '/unassign'}" method="post" class="m-0">
+            <button type="submit" class="unassign-btn" title="Премахни касиера">
+              <i class="bi bi-x-circle-fill"></i>
+            </button>
+          </form>
+        </div>
+
+        <div th:unless="${register.cashier != null}" class="text-center mt-3">
+          <button type="button"
+                  class="btn btn-light"
+                  data-bs-toggle="modal"
+                  data-bs-target="#assignCashierModal"
+                  th:attr="data-register-id=${register.id},
+                           data-cashiers-available=${#lists.isEmpty(availableCashiers) ? 'false' : 'true'}">
+            Добави касиер
+          </button>
+          <p class="text-warning mt-2 no-cashiers-message d-none">Няма свободни касиери.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+</body>
+</html>
