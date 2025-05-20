@@ -58,7 +58,10 @@ function performCheckout(cashierId) {
       updateCartCount();
       bootstrap.Modal.getInstance(document.getElementById('confirmCheckoutModal'))?.hide();
       showSuccessModal(`✅ Успешно плащане. Сума: ${data.totalAmount.toFixed(2)} лв.`);
-      renderCartModal();
+
+      setTimeout(() => {
+        location.reload();
+      }, 2000);
     })
     .catch(err => showErrorModal(err.message || "Възникна проблем при плащането."));
 }

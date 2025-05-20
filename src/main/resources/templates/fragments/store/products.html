@@ -9,7 +9,6 @@
            th:each="entry : ${productPrices}"
            th:if="${!entry.key.hasExpirationDate or entry.key.expirationDate > T(java.time.LocalDate).now()}"
            th:attr="data-product-id=${entry.key.id}, data-product-name=${entry.key.name}, data-stock=${entry.key.quantity}">
-
         <div class="card-body d-flex flex-column justify-content-between">
           <div>
             <h5 class="card-title" th:text="${entry.key.name}">Име</h5>
@@ -23,20 +22,28 @@
             </p>
           </div>
 
-          <div class="d-flex justify-content-start mt-3">
-            <div class="quantity-selector d-flex align-items-center">
-              <button class="btn btn-sm btn-outline-secondary btn-icon quantity-decrease">
-                <i class="bi bi-dash"></i>
-              </button>
-              <input type="number" class="form-control form-control-sm quantity-input mx-1 text-center" value="1" min="1">
-              <button class="btn btn-sm btn-outline-secondary btn-icon quantity-increase">
-                <i class="bi bi-plus"></i>
-              </button>
+          <div th:if="${entry.key.quantity > 0}">
+            <div class="d-flex justify-content-start mt-3">
+              <div class="quantity-selector d-flex align-items-center">
+                <button class="btn btn-sm btn-outline-secondary btn-icon quantity-decrease">
+                  <i class="bi bi-dash"></i>
+                </button>
+                <input type="number" class="form-control form-control-sm quantity-input mx-1 text-center" value="1" min="1">
+                <button class="btn btn-sm btn-outline-secondary btn-icon quantity-increase">
+                  <i class="bi bi-plus"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-center mt-2">
+            <button class="btn btn-cart">🛒 Добави в количката</button>
             </div>
           </div>
 
-          <div class="d-flex justify-content-center mt-2">
-            <button class="btn btn-cart">🛒 Добави в количката</button>
+          <div th:unless="${entry.key.quantity > 0}" class="text-center mt-4">
+            <span class="badge bg-danger-subtle text-danger fw-semibold px-3 py-2 rounded-pill">
+            ❌ Не е в наличност
+            </span>
           </div>
         </div>
       </div>

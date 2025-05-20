@@ -344,3 +344,9 @@ td {
     border-radius: 50%;
     pointer-events: none;
 }
+
+.badge.bg-danger-subtle {
+  background-color: #f8d7da;
+  color: #842029;
+  font-size: 0.95rem;
+}
