@@ -31,6 +31,9 @@
         <li class="nav-item">
             <button class="nav-link" onclick="showSection('receipts', this)">Касови бележки</button>
         </li>
+        <li class="nav-item">
+            <button class="nav-link" onclick="showSection('financialReport', this)">Финансов отчет</button>
+        </li>
     </ul>
 
     <!-- Продукти -->
@@ -127,6 +130,34 @@
                 </div>
             </div>
         </div>
+    </section>
+
+    <!-- Финансов отчет -->
+    <section class="mt-5" id="financialReport-section" style="display: none;">
+        <h2>Финансов отчет</h2>
+        <table class="table table-bordered w-50">
+            <tbody>
+            <tr>
+                <th>Общо разходи за доставка</th>
+                <td th:text="${#numbers.formatDecimal(financialReport.totalDeliveryCost, 1, 'COMMA', 2, 'POINT') + ' лв.'}">0.00 лв.</td>
+            </tr>
+            <tr>
+                <th>Общо заплати на касиери на месец</th>
+                <td th:text="${#numbers.formatDecimal(financialReport.totalSalaries, 1, 'COMMA', 2, 'POINT')} + ' лв.'">0.00 лв.</td>
+            </tr>
+            <tr>
+                <th>Оборот на магазина</th>
+                <td th:text="${#numbers.formatDecimal(financialReport.totalIncome, 1, 'COMMA', 2, 'POINT')} + ' лв.'">0.00 лв.</td>
+            </tr>
+            <tr class="table-success">
+                <th>Печалба</th>
+                <td th:text="${#numbers.formatDecimal(financialReport.profit, 1, 'COMMA', 2, 'POINT') + ' лв.'}"
+                    th:classappend="${financialReport.profit < 0} ? 'text-danger'">
+                    0.00 лв.
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </section>
 
     <div class="back-link">

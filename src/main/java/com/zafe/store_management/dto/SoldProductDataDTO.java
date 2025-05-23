@@ -2,7 +2,7 @@ package com.zafe.store_management.dto;
 
 import java.io.Serializable;
 
-public class SoldProductData implements Serializable {
+public class SoldProductDataDTO implements Serializable {
     private String productName;
     private int quantity;
     private double sellingPrice;

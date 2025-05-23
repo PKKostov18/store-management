@@ -2,7 +2,7 @@ package com.zafe.store_management.service;
 
 import com.zafe.store_management.dto.CartItemDTO;
 import com.zafe.store_management.dto.ReceiptData;
-import com.zafe.store_management.dto.SoldProductData;
+import com.zafe.store_management.dto.SoldProductDataDTO;
 import com.zafe.store_management.exception.CashierNotFoundException;
 import com.zafe.store_management.model.Cashier;
 import com.zafe.store_management.model.Product;
@@ -93,8 +93,8 @@ public class ReceiptService {
         data.setCashierName(receipt.getCashier().getName());
         data.setTotalAmount(receipt.getTotalAmount());
 
-        List<SoldProductData> soldProducts = receipt.getSoldProducts().stream().map(sp -> {
-            SoldProductData dto = new SoldProductData();
+        List<SoldProductDataDTO> soldProducts = receipt.getSoldProducts().stream().map(sp -> {
+            SoldProductDataDTO dto = new SoldProductDataDTO();
             dto.setProductName(sp.getProduct().getName());
             dto.setQuantity(sp.getQuantity());
             dto.setSellingPrice(sp.getSellingPrice());

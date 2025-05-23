@@ -1,19 +1,17 @@
 package com.zafe.store_management.service;
 
+import com.zafe.store_management.dto.ReceiptData;
+import com.zafe.store_management.dto.StoreFinancialReportDTO;
 import com.zafe.store_management.exception.StoreNotFoundException;
 import com.zafe.store_management.model.CashRegister;
 import com.zafe.store_management.model.Product;
 import com.zafe.store_management.model.Store;
-import com.zafe.store_management.model.StoreSettings;
 import com.zafe.store_management.repository.StoreRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class StoreService {
@@ -44,5 +42,24 @@ public class StoreService {
         }
         store.setCashRegisters(registers);
         storeRepository.save(store);
+    }
+
+    public StoreFinancialReportDTO calculateFinancialReport(Store store, List<Product> products, List<ReceiptData> receipts) {
+        BigDecimal totalDeliveryCost = products.stream()
+                .map(p -> BigDecimal.valueOf(p.getDeliveryPrice()).multiply(BigDecimal.valueOf(p.getQuantity())))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        BigDecimal totalSalaries = store.getCashiers().stream()
+                .map(c -> BigDecimal.valueOf(c.getMonthlySalary()))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        BigDecimal totalIncome = receipts.stream()
+                .flatMap(r -> r.getSoldProducts().stream())
+                .map(s -> BigDecimal.valueOf(s.getSellingPrice()).multiply(BigDecimal.valueOf(s.getQuantity())))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        BigDecimal profit = totalIncome.subtract(totalDeliveryCost).subtract(totalSalaries);
+
+        return new StoreFinancialReportDTO(totalDeliveryCost, totalSalaries, totalIncome, profit);
     }
 }

@@ -5,7 +5,6 @@ import com.zafe.store_management.model.Cashier;
 import com.zafe.store_management.model.Store;
 import com.zafe.store_management.repository.CashierRepository;
 import com.zafe.store_management.repository.StoreRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

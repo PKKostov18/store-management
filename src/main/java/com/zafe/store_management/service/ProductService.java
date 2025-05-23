@@ -9,7 +9,6 @@ import com.zafe.store_management.model.Store;
 import com.zafe.store_management.model.StoreSettings;
 import com.zafe.store_management.repository.ProductRepository;
 import com.zafe.store_management.repository.StoreRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;

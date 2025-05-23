@@ -1,6 +1,7 @@
 package com.zafe.store_management.controller;
 
 import com.zafe.store_management.dto.ReceiptData;
+import com.zafe.store_management.dto.StoreFinancialReportDTO;
 import com.zafe.store_management.model.*;
 import com.zafe.store_management.service.CashierService;
 import com.zafe.store_management.service.ProductService;
@@ -63,15 +64,20 @@ public class StoreController {
         List<Product> products = productService.getProductsByStoreId(id);
         List<Cashier> availableCashiers = cashierService.getAvailableCashiersForStore(id);
         List<ReceiptData> receiptDataList = receiptService.loadReceiptsForStore(store.getName());
+        StoreFinancialReportDTO report = storeService.calculateFinancialReport(store, products, receiptDataList);
 
         model.addAttribute("store", store);
         model.addAttribute("products", products);
         model.addAttribute("availableCashiers", availableCashiers);
         model.addAttribute("receipts", receiptDataList);
+        model.addAttribute("totalDeliveryCost", report.getTotalDeliveryCost());
+        model.addAttribute("totalSalaries", report.getTotalSalaries());
+        model.addAttribute("totalIncome", report.getTotalIncome());
+        model.addAttribute("profit", report.getProfit());
+        model.addAttribute("financialReport", report);
 
         return "store-details";
     }
-
 
     @GetMapping("/{id}")
     public String showStore(@PathVariable Long id, Model model) {

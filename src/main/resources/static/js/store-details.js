@@ -3,6 +3,7 @@ function showSection(section, button) {
     document.getElementById('products-section').style.display = 'none';
     document.getElementById('cashiers-section').style.display = 'none';
     document.getElementById('receipts-section').style.display = 'none';
+    document.getElementById('financialReport-section').style.display = 'none';
 
     // Покажи избраната секция
     document.getElementById(section + '-section').style.display = 'block';

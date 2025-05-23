@@ -8,7 +8,7 @@ public class ReceiptData implements Serializable {
     private Long receiptId;
     private String cashierName;
     private LocalDateTime issuedAt;
-    private List<SoldProductData> soldProducts;
+    private List<SoldProductDataDTO> soldProducts;
     private double totalAmount;
 
     public Long getReceiptId() {
@@ -35,11 +35,11 @@ public class ReceiptData implements Serializable {
         this.issuedAt = issuedAt;
     }
 
-    public List<SoldProductData> getSoldProducts() {
+    public List<SoldProductDataDTO> getSoldProducts() {
         return soldProducts;
     }
 
-    public void setSoldProducts(List<SoldProductData> soldProducts) {
+    public void setSoldProducts(List<SoldProductDataDTO> soldProducts) {
         this.soldProducts = soldProducts;
     }
 
