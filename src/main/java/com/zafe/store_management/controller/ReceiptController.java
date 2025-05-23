@@ -7,6 +7,7 @@ import com.zafe.store_management.service.ReceiptService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -25,6 +26,8 @@ public class ReceiptController {
         try {
             Receipt receipt = receiptService.checkout(cashierId, cartItems);
 
+            receiptService.serializeReceiptToFile(receipt.getId());
+
             ReceiptDTO dto = new ReceiptDTO();
             dto.setTotalAmount(receipt.getTotalAmount());
             dto.setCashierName(receipt.getCashier().getName());
@@ -38,6 +41,8 @@ public class ReceiptController {
 
         } catch (RuntimeException ex) {
             return ResponseEntity.badRequest().body(ex.getMessage());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }

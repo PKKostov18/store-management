@@ -21,8 +21,20 @@
         </a>
     </div>
 
+    <ul class="nav nav-pills mb-4" id="storeFilterTabs">
+        <li class="nav-item">
+            <button class="nav-link active" onclick="showSection('products', this)">Продукти</button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" onclick="showSection('cashiers', this)">Касиери</button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" onclick="showSection('receipts', this)">Касови бележки</button>
+        </li>
+    </ul>
+
     <!-- Продукти -->
-    <section>
+    <section id="products-section">
         <h2>Продукти в магазина</h2>
         <div class="table-wrapper">
             <table>
@@ -57,7 +69,7 @@
 
 
     <!-- Касиери -->
-    <section>
+    <section id="cashiers-section" style="display: none;">
         <h2>Касиери</h2>
         <div class="table-wrapper">
             <table>
@@ -80,12 +92,49 @@
         </div>
     </section>
 
+    <!-- Касови бележки -->
+    <section id="receipts-section" style="display: none;">
+        <h2>Касови бележки</h2>
+
+        <div th:if="${receipts.empty}">
+            <p class="text-muted">Няма налични касови бележки за този магазин.</p>
+        </div>
+
+        <div class="row row-cols-2 row-cols-lg-3 g-4" th:if="${!receipts.empty}">
+            <div class="col" th:each="receipt, iter : ${receipts}">
+                <div class="card h-100 p-3 shadow-sm rounded">
+                    <h5>Бележка № <span th:text="${iter.index + 1}"></span></h5>
+                    <p>Касиер: <strong th:text="${receipt.cashierName}"></strong></p>
+                    <p>Издадена на: <span th:text="${#temporals.format(receipt.issuedAt, 'dd.MM.yyyy HH:mm')}"></span></p>
+
+                    <table class="table table-sm table-striped">
+                        <thead>
+                        <tr>
+                            <th>Продукт</th>
+                            <th>Количество</th>
+                            <th>Продажна цена</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="sold : ${receipt.soldProducts}">
+                            <td th:text="${sold.productName}"></td>
+                            <td th:text="${sold.quantity}"></td>
+                            <td th:text="${sold.sellingPrice} + ' лв.'"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <p><strong>Обща сума: </strong><span th:text="${#numbers.formatDecimal(receipt.totalAmount, 1, 'COMMA', 2, 'POINT')} + ' лв.'"></span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <div class="back-link">
         <a th:href="@{'/store/' + ${store.id}}">⬅ Обратно към магазина</a>
     </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="/js/store.js"></script>
+<script th:src="@{/js/store-details.js}"></script>
 </body>
 </html>

@@ -1,4 +1,8 @@
 /* Основни стилове */
+html {
+    overflow-y: scroll;
+}
+
 body {
     font-family: 'Segoe UI', sans-serif;
     background-color: #f4f7fb !important;
@@ -157,5 +161,16 @@ table tbody tr:hover {
     th,
     td {
         padding: 10px;
+    }
+}
+
+@media (min-width: 992px) {
+    .product-grid.has-four-or-more {
+        padding-left: 7%;
+    }
+
+    .product-card {
+        flex: 0 1 calc(25% - 20px);
+        max-width: calc(25% - 20px);
     }
 }
