@@ -31,6 +31,9 @@ public class Product {
     @JoinColumn(name = "store_id")
     private Store store;
 
+    @Column(nullable = false, columnDefinition = "bit default 0")
+    private boolean deleted;
+
     public Long getId() {
         return id;
     }
@@ -93,5 +96,13 @@ public class Product {
 
     public void setStore(Store store) {
         this.store = store;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 }

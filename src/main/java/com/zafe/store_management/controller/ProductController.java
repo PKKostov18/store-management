@@ -73,5 +73,13 @@ public class ProductController {
         return response;
     }
 
+    @PostMapping("/{productId}/delete")
+    public String markProductAsDeleted(@PathVariable Long storeId, @PathVariable Long productId) {
+        Product product = productService.findById(productId);
+        product.setDeleted(true);
+        productService.save(product);
+        return "redirect:/store/" + storeId + "/details";
+    }
+
 }
 

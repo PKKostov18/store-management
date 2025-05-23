@@ -9,6 +9,7 @@ import com.zafe.store_management.model.Store;
 import com.zafe.store_management.model.StoreSettings;
 import com.zafe.store_management.repository.ProductRepository;
 import com.zafe.store_management.repository.StoreRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -63,7 +64,7 @@ public class ProductService {
     }
 
     public List<Product> getProductsByStoreId(Long storeId) {
-        return productRepository.findByStoreId(storeId);
+        return productRepository.findByStoreIdAndDeletedFalse(storeId);
     }
 
     public void saveProductForStore(Product product, Long storeId) {
@@ -109,5 +110,10 @@ public class ProductService {
         }
 
         return productPrices;
+    }
+
+    public Product findById(Long id) {
+        return productRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Продукт с ID " + id + " не е намерен"));
     }
 }
