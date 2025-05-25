@@ -23,6 +23,9 @@ public class StoreService {
     }
 
     public Store save(Store store) {
+        if (store == null) {
+            throw new IllegalArgumentException("Store cannot be null");
+        }
         return storeRepository.save(store);
     }
 

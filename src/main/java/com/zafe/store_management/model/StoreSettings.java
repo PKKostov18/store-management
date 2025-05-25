@@ -13,13 +13,19 @@ public class StoreSettings {
 
     private double nonFoodMarkupPercentage;
 
-    private double totalTurnover;
-
-    private int issuedReceipts;
-
     private int daysBeforeExpirationForDiscount;
 
     private double discountPercentage;
+
+    public StoreSettings() {};
+
+    public StoreSettings(Long id, double foodMarkupPercentage, double nonFoodMarkupPercentage, int daysBeforeExpirationForDiscount, double discountPercentage) {
+        this.id = id;
+        this.foodMarkupPercentage = foodMarkupPercentage;
+        this.nonFoodMarkupPercentage = nonFoodMarkupPercentage;
+        this.daysBeforeExpirationForDiscount = daysBeforeExpirationForDiscount;
+        this.discountPercentage = discountPercentage;
+    }
 
     public Long getId() {
         return id;
@@ -43,22 +49,6 @@ public class StoreSettings {
 
     public void setNonFoodMarkupPercentage(double nonFoodMarkupPercentage) {
         this.nonFoodMarkupPercentage = nonFoodMarkupPercentage;
-    }
-
-    public double getTotalTurnover() {
-        return totalTurnover;
-    }
-
-    public void setTotalTurnover(double totalTurnover) {
-        this.totalTurnover = totalTurnover;
-    }
-
-    public int getIssuedReceipts() {
-        return issuedReceipts;
-    }
-
-    public void setIssuedReceipts(int issuedReceipts) {
-        this.issuedReceipts = issuedReceipts;
     }
 
     public int getDaysBeforeExpirationForDiscount() {

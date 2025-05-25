@@ -34,6 +34,20 @@ public class Product {
     @Column(nullable = false, columnDefinition = "bit default 0")
     private boolean deleted;
 
+    public Product() {};
+
+    public Product(Long id, String name, double deliveryPrice, int quantity, ProductCategory category, boolean hasExpirationDate, LocalDate expirationDate, Store store, boolean deleted) {
+        this.id = id;
+        this.name = name;
+        this.deliveryPrice = deliveryPrice;
+        this.quantity = quantity;
+        this.category = category;
+        this.hasExpirationDate = hasExpirationDate;
+        this.expirationDate = expirationDate;
+        this.store = store;
+        this.deleted = deleted;
+    }
+
     public Long getId() {
         return id;
     }

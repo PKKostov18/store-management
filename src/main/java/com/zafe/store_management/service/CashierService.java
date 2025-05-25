@@ -21,6 +21,9 @@ public class CashierService {
     }
 
     public Cashier save(Cashier cashier) {
+        if (cashier == null) {
+            throw new IllegalArgumentException("Cashier cannot be null");
+        }
         return cashierRepository.save(cashier);
     }
 

@@ -21,6 +21,16 @@ public class Cashier {
     @OneToOne(mappedBy = "cashier")
     private CashRegister cashRegister;
 
+    public Cashier() {};
+
+    public Cashier(Long id, String name, double monthlySalary, Store store, CashRegister cashRegister) {
+        this.id = id;
+        this.name = name;
+        this.monthlySalary = monthlySalary;
+        this.store = store;
+        this.cashRegister = cashRegister;
+    }
+
     public Long getId() {
         return id;
     }

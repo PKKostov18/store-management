@@ -17,6 +17,14 @@ public class CashRegister {
     @JoinColumn(name = "store_id")
     private Store store;
 
+    public CashRegister() {}
+
+    public CashRegister(Long id, Cashier cashier, Store store) {
+        this.id = id;
+        this.cashier = cashier;
+        this.store = store;
+    }
+
     public Long getId() {
         return id;
     }

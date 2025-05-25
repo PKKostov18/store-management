@@ -5,6 +5,14 @@ public class CartItemDTO {
     private int quantity;
     private double sellingPrice;
 
+    public CartItemDTO() {};
+
+    public CartItemDTO(Long productId, int quantity, double sellingPrice) {
+        this.productId = productId;
+        this.quantity = quantity;
+        this.sellingPrice = sellingPrice;
+    }
+
     public Long getProductId() {
         return productId;
     }
