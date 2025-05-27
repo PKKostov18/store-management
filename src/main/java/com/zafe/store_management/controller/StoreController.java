@@ -38,13 +38,13 @@ public class StoreController {
         Store store = new Store();
         store.setStoreSettings(new StoreSettings());
         model.addAttribute("store", store);
-        return "store-create";
+        return "store-add";
     }
 
     @PostMapping("/add")
     public String createStore(@Valid @ModelAttribute Store store, BindingResult bindingResult, @RequestParam("registerCount") int registerCount) {
         if (bindingResult.hasErrors()) {
-            return "store-create";
+            return "store-add";
         }
 
         storeService.createStoreWithRegisters(store, registerCount);

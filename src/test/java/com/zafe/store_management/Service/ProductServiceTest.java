@@ -38,12 +38,6 @@ class ProductServiceTest {
     @InjectMocks
     private ProductService productService;
 
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-        productService = new ProductService(productRepository, storeRepository);
-    }
-
     // save()
     @Test
     void save_ShouldCallRepositorySave() {

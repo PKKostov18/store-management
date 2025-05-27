@@ -41,7 +41,7 @@ public class ProductService {
     }
 
     public BigDecimal calculateSellingPrice(Product product, StoreSettings settings) {
-        BigDecimal markup = BigDecimal.ZERO;
+        BigDecimal markup;
 
         if (product.getCategory() == ProductCategory.FOOD) {
             markup = BigDecimal.valueOf(settings.getFoodMarkupPercentage()).divide(BigDecimal.valueOf(100));

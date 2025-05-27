@@ -52,12 +52,6 @@ public class ProductController {
         return "redirect:/store/{storeId}";
     }
 
-    @GetMapping("/list")
-    public String listProducts(Model model) {
-        model.addAttribute("products", productService.findAll());
-        return "product-list";
-    }
-
     @ResponseBody
     @PostMapping("/checkQuantity")
     public Map<String, Integer> checkQuantity(@PathVariable Long storeId,
